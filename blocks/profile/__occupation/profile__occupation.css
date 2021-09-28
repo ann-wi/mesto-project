@@ -1,0 +1,8 @@
+.profile__occupation {
+  grid-area: occupation;
+  line-height: auto;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 16px 0 0 0;
+  padding: 0;
+}

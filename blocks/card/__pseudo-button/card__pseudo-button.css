@@ -1,0 +1,10 @@
+.card__pseudo-button {
+  display: inline-block;
+  vertical-align: middle;
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like-button.svg);
+  background-size: cover;
+  background-color: inherit;
+  background-repeat: no-repeat;
+}

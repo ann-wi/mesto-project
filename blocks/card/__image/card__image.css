@@ -1,0 +1,6 @@
+.card__image {
+  grid-area: image;
+  max-width: 100%;
+  min-height: 282px;
+  border-radius: 3% 3% 0 0;
+}

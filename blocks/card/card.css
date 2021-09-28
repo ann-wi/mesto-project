@@ -1,0 +1,12 @@
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 282px 79px;
+  grid-template-areas:
+    "image"
+    "buttom-container";
+  max-width: 282px;
+  align-items: center;
+  border-radius: 3%;
+  background-color: #fff;
+}
