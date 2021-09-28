@@ -5,5 +5,13 @@
   font-weight: 500;
   margin: 0;
   padding: 0;
-  min-width: 294px;
+}
+
+@media screen and (max-width: 666px) {
+  .profile__name {
+    text-align: center;
+    line-height: auto;
+    font-size: 27px;
+    width: 189px;
+  }
 }

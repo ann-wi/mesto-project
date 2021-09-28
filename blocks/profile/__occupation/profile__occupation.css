@@ -6,3 +6,16 @@
   margin: 16px 0 0 0;
   padding: 0;
 }
+
+@media screen and (max-width: 666px) {
+  .profile__occupation {
+    text-align: center;
+    min-width: 189px;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  .profile__occupation {
+    font-size: 14px;
+  }
+}
