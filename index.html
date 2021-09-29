@@ -8,19 +8,19 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    <div class="pop-up">
+    <div class="pop-up pop-up_opened">
       <button class="pop-up__close-button"></button>
       <form class="form">
         <h2 class="form__heading">Редактировать профиль</h2>
         <fieldset class="form__input-container">
           <input
-            class="form__item form__item_name"
+            class="form__item form__item_type_name"
             type="text"
             name="name"
             value="Жак-Ив Кусто"
           />
           <input
-            class="form__item form__item_occupation"
+            class="form__item form__item_type_occupation"
             type="text"
             name="occupation"
             value="Исследователь океана"
@@ -41,7 +41,7 @@
           alt="Жак_Ив Кусто"
         />
         <div class="profile__info">
-          <h2 class="profile__name">Жак-Ив Кусто</h2>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-button"></button>
           <p class="profile__occupation">Исследователь океана</p>
         </div>
@@ -50,7 +50,7 @@
       <section class="cards">
         <div class="card">
           <img class="card__image" src="./images/osaka.jpg" alt="Осака" />
-          <div class="card__buttom-container">
+          <div class="card__container">
             <h2 class="card__title">Осака</h2>
             <label class="card__like" for="osaka">
               <input
@@ -70,7 +70,7 @@
             src="./images/neuschwanstein-castle.jpg"
             alt="замок Нойшванштайн"
           />
-          <div class="card__buttom-container">
+          <div class="card__container">
             <h2 class="card__title">Замок Нойшванштайн</h2>
             <label class="card__like" for="neuschwanstein-castle">
               <input
@@ -86,7 +86,7 @@
         </div>
         <div class="card">
           <img class="card__image" src="./images/almaty.jpg" alt="Алма-Ата" />
-          <div class="card__buttom-container">
+          <div class="card__container">
             <h2 class="card__title">Алма-Ата</h2>
             <label class="card__like" for="almaty">
               <input
@@ -102,7 +102,7 @@
         </div>
         <div class="card">
           <img class="card__image" src="./images/beijing.jpg" alt="Пекин" />
-          <div class="card__buttom-container">
+          <div class="card__container">
             <h2 class="card__title">Пекин</h2>
             <label class="card__like" for="beijing">
               <input
@@ -122,7 +122,7 @@
             src="./images/skogafoss.jpg"
             alt="водопад Скоугафосс"
           />
-          <div class="card__buttom-container">
+          <div class="card__container">
             <h2 class="card__title">Водопад Скоугафосс</h2>
             <label class="card__like" for="skogafoss">
               <input
@@ -138,7 +138,7 @@
         </div>
         <div class="card">
           <img class="card__image" src="./images/hokkaido.jpg" alt="Хоккайдо" />
-          <div class="card__buttom-container">
+          <div class="card__container">
             <h2 class="card__title">Хоккайдо</h2>
             <label class="card__like" for="hokkaido">
               <input

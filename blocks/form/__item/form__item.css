@@ -1,8 +1,18 @@
 .form__item {
+  width: 358px;
+  height: 27px;
   border: none;
   border-bottom: 1px solid #000;
+  outline: 1px solid #fff;
   color: #000;
   line-height: auto;
   font-size: 14px;
   font-weight: 400;
+}
+
+@media screen and (max-width: 540px) {
+  .form__item {
+    width: 238px;
+    height: 27px;
+  }
 }

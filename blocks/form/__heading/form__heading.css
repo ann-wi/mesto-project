@@ -7,3 +7,11 @@
   margin: 54px auto 0 auto;
   padding: 0;
 }
+
+@media screen and (max-width: 540px) {
+  .form__heading {
+    font-size: 18px;
+    width: 238px;
+    margin: 22px auto 0 auto;
+  }
+}

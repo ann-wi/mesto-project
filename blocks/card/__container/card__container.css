@@ -1,4 +1,4 @@
-.card__buttom-container {
+.card__container {
   grid-area: buttom-container;
   display: flex;
   justify-content: space-between;

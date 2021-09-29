@@ -15,3 +15,7 @@
   opacity: 0.5;
   transition: 1s;
 }
+
+.card__like-button:checked:hover + .card__pseudo-button {
+  opacity: 1;
+}
