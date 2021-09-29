@@ -20,7 +20,7 @@
   .form__save-button {
     width: 238px;
     height: 46px;
-    line-height: auto;
+    line-height: 100%;
     font-size: 14px;
     margin: 45px auto 25px auto;
   }

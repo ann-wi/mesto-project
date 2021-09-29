@@ -1,7 +1,7 @@
 .form__heading {
   color: #000;
-  line-height: auto;
-  font-size: 24;
+  line-height: 100%;
+  font-size: 24px;
   font-weight: 900;
   width: 358px;
   margin: 54px auto 0 auto;
@@ -12,6 +12,6 @@
   .form__heading {
     font-size: 18px;
     width: 238px;
-    margin: 22px auto 0 auto;
+    margin: 25px auto 0 auto;
   }
 }
