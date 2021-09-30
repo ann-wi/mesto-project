@@ -1,0 +1,14 @@
+.form__container {
+  position: relative;
+  justify-content: center;
+  display: flex;
+  min-width: 503px;
+  min-height: 376px;
+}
+
+@media screen and (max-width: 540px) {
+  .form__container {
+    min-width: 282px;
+    min-height: 338px;
+  }
+}

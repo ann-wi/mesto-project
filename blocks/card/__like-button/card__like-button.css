@@ -1,21 +1,16 @@
 .card__like-button {
   grid-area: like;
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
+  width: 22px;
+  height: 19px;
+  border: none;
+  margin: 0 22px 0 0;
+  padding: 0;
+  background-color: #fff;
+  background-image: url(../../../images/like-button.svg);
+  cursor: pointer;
 }
 
-.card__like-button:checked + .card__pseudo-button {
-  background-image: url(../../../images/like-button_active.svg);
-}
-
-.card__like-button:hover + .card__pseudo-button {
+.card__like-button:hover {
   opacity: 0.5;
   transition: 1s;
-}
-
-.card__like-button:checked:hover + .card__pseudo-button {
-  opacity: 1;
 }
