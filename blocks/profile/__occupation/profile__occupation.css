@@ -6,7 +6,7 @@
   margin: 16px 0 0 0;
   padding: 0;
   text-overflow: ellipsis;
-  max-width: 336px;
+  max-width: 294px;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -15,7 +15,7 @@
   .profile__occupation {
     font-size: 14px;
     text-align: center;
-    min-width: 189px;
+    max-width: 189px;
   }
 }
 
