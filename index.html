@@ -50,6 +50,7 @@
       </section>
       <section class="cards">
         <div class="card">
+          <button class="card__trash-button" type="button"></button>
           <img class="card__image" src="./images/osaka.jpg" alt="Осака" />
           <div class="card__container">
             <h2 class="card__title">Осака</h2>
@@ -57,6 +58,7 @@
           </div>
         </div>
         <div class="card">
+          <button class="card__trash-button" type="button"></button>
           <img
             class="card__image"
             src="./images/neuschwanstein-castle.jpg"
@@ -68,6 +70,7 @@
           </div>
         </div>
         <div class="card">
+          <button class="card__trash-button" type="button"></button>
           <img class="card__image" src="./images/almaty.jpg" alt="Алма-Ата" />
           <div class="card__container">
             <h2 class="card__title">Алма-Ата</h2>
@@ -75,6 +78,7 @@
           </div>
         </div>
         <div class="card">
+          <button class="card__trash-button" type="button"></button>
           <img class="card__image" src="./images/beijing.jpg" alt="Пекин" />
           <div class="card__container">
             <h2 class="card__title">Пекин</h2>
@@ -82,6 +86,7 @@
           </div>
         </div>
         <div class="card">
+          <button class="card__trash-button" type="button"></button>
           <img
             class="card__image"
             src="./images/skogafoss.jpg"
@@ -93,6 +98,7 @@
           </div>
         </div>
         <div class="card">
+          <button class="card__trash-button" type="button"></button>
           <img class="card__image" src="./images/hokkaido.jpg" alt="Хоккайдо" />
           <div class="card__container">
             <h2 class="card__title">Хоккайдо</h2>
@@ -104,5 +110,15 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
+    <template id="card-template">
+      <div class="card">
+        <img class="card__image" alt="card-image" />
+        <div class="card__container">
+          <h2 class="card__title"></h2>
+          <button class="card__like-button" type="button"></button>
+        </div>
+      </div>
+    </template>
+    <script src="./index.js"></script>
   </body>
 </html>
