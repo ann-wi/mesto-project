@@ -17,3 +17,10 @@ const profileAddButton = profile.querySelector(".profile__add-button");
 profileAddButton.addEventListener("click", function () {
   popUp.classList.add("pop-up_opened");
 });
+
+const card = document.querySelector(".card");
+const likeButton = card.querySelector(".card__like-button");
+
+likeButton.addEventListener("click", function (event) {
+  event.target.classList.toggle("card__like-button_active");
+});
