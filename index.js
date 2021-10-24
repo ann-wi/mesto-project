@@ -67,6 +67,20 @@ likeButton.addEventListener("click", function (event) {
 //get initial cards from array
 
 //create card
+const cardsContainer = document.querySelector(".cards");
+
+function addCard(imageLink, titleValue) {
+  const cardTemplate = document.querySelector("#card-template").content;
+
+  const cardElement = cardTemplate
+    .querySelector(".card")
+    .cardTemplate.cloneNode(true);
+
+  cardElement.querySelector(".card__image").setAttribute("src", imageLink);
+  cardElement.querySelector(".card__title").textContent = titleValue;
+
+  cardsContainer.append(cardElement);
+}
 
 //pop-up image
 //make card images links
