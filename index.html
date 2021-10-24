@@ -8,7 +8,7 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    <div class="pop-up">
+    <div class="pop-up pop-up_type_profile">
       <div class="pop-up__container">
         <button class="pop-up__close-button" type="button"></button>
         <form class="form" name="profile-info">
@@ -31,7 +31,7 @@
         </form>
       </div>
     </div>
-    <div class="pop-up">
+    <div class="pop-up pop-up_type_new-card">
       <div class="pop-up__container">
         <button class="pop-up__close-button" type="button"></button>
         <form class="form" name="new-card">
@@ -52,6 +52,15 @@
           </fieldset>
           <button class="form__save-button" type="submit">Создать</button>
         </form>
+      </div>
+    </div>
+    <div class="pop-up pop-up_type_card">
+      <div class="pop-up__container">
+        <button class="pop-up__close-button" type="button"></button>
+        <!--
+          img
+          caption
+        -->
       </div>
     </div>
     <header class="header">
@@ -135,6 +144,7 @@
     </footer>
     <template id="card-template">
       <div class="card">
+        <button class="card__trash-button" type="button"></button>
         <img class="card__image" alt="card-image" />
         <div class="card__container">
           <h2 class="card__title"></h2>
