@@ -8,20 +8,20 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    <div class="pop-up">
+    <div class="pop-up pop-up_type_profile">
       <div class="pop-up__container">
         <button class="pop-up__close-button" type="button"></button>
         <form class="form" name="profile-info">
           <h2 class="form__heading">Редактировать профиль</h2>
           <fieldset class="form__input-container">
             <input
-              class="form__item"
+              class="form__item form__item_name"
               type="text"
               name="name"
               value="Жак-Ив Кусто"
             />
             <input
-              class="form__item"
+              class="form__item form__item_occupation"
               type="text"
               name="occupation"
               value="Исследователь океана"
@@ -29,6 +29,38 @@
           </fieldset>
           <button class="form__save-button" type="submit">Сохранить</button>
         </form>
+      </div>
+    </div>
+    <div class="pop-up pop-up_type_new-card">
+      <div class="pop-up__container">
+        <button class="pop-up__close-button" type="button"></button>
+        <form class="form" name="new-card">
+          <h2 class="form__heading">Новое место</h2>
+          <fieldset class="form__input-container">
+            <input
+              class="form__item form__item_heading"
+              type="text"
+              name="heading"
+              value="Название"
+            />
+            <input
+              class="form__item form__item_link"
+              type="text"
+              name="image_link"
+              value="Ссылка на картинку"
+            />
+          </fieldset>
+          <button class="form__save-button" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="pop-up pop-up_type_card">
+      <div class="pop-up__container">
+        <button class="pop-up__close-button" type="button"></button>
+        <!--
+          img
+          caption
+        -->
       </div>
     </div>
     <header class="header">
@@ -112,6 +144,7 @@
     </footer>
     <template id="card-template">
       <div class="card">
+        <button class="card__trash-button" type="button"></button>
         <img class="card__image" alt="card-image" />
         <div class="card__container">
           <h2 class="card__title"></h2>
