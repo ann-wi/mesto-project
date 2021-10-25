@@ -6,6 +6,7 @@
 
 Использованые технологии:
 
+- JavaScript
 - HTML
 - CSS
 - Git
