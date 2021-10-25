@@ -18,7 +18,6 @@ popUpCloseButton.forEach((item) => {
   });
 });
 
-//edit profile
 const profile = document.querySelector(".profile");
 const profileEditButton = profile.querySelector(".profile__edit-button");
 const popUpProfile = document.querySelector(".pop-up_type_profile");
@@ -103,7 +102,7 @@ function formAddHandler(event) {
     link: formNewCard.querySelector(".form__item_image").value,
   };
 
-  const addedCard = renderCard(inputs, cardsContainer);
+  renderCard(inputs, cardsContainer);
 
   closePopUp(popUp);
 }
