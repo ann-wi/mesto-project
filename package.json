@@ -1,0 +1,30 @@
+{
+  "name": "mesto-project",
+  "version": "1.0.0",
+  "description": "Проект является галереей, где пользователь может создать профиль и загружать фотографии интересных мест. Таким образом превращается некий фотоальбом. Еще есть возможность ставить лайки.",
+  "main": "index.js",
+  "scripts": {
+    "build": "rd /s /q dist && webpack --mode production",
+    "dev": "webpack serve --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ann-wi/mesto-project.git"
+  },
+  "author": "Vasileva Anna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ann-wi/mesto-project/issues"
+  },
+  "homepage": "https://github.com/ann-wi/mesto-project#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.2"
+  },
+  "dependencies": {
+    "core-js": "^3.20.2"
+  }
+}
