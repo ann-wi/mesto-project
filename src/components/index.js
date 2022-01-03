@@ -1,3 +1,5 @@
+import "../pages/index.css";
+
 const popUpProfile = document.querySelector(".pop-up_type_profile");
 const popUpNewCard = document.querySelector(".pop-up_type_new-card");
 const popUpCard = document.querySelector(".pop-up_type_card");
