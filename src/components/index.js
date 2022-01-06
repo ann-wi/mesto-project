@@ -1,11 +1,36 @@
 import "../pages/index.css";
 
+const profile = document.querySelector(".profile");
+const profileEditButton = profile.querySelector(".profile__edit-button");
+const profileEditAvatarButton = profile.querySelector(
+  ".profile__edit-avatar-button"
+);
+
+const formProfileInfo = document.querySelector(".form_type_profile-info");
+const nameInput = formProfileInfo.querySelector(".form__item_name");
+const occupationInput = formProfileInfo.querySelector(".form__item_occupation");
+
 const popUpProfile = document.querySelector(".pop-up_type_profile");
 const popUpNewCard = document.querySelector(".pop-up_type_new-card");
 const popUpCard = document.querySelector(".pop-up_type_card");
+const popUpAvatar = document.querySelector(".pop-up_type_avatar");
 
-const popUpCloseButton = document.querySelectorAll(".pop-up__close-button");
+const formAvatar = document.querySelector(".form_type_profile-avatar");
+const avatarInput = formAvatar.querySelector(".form__item_avatar");
 
+const closePopUpProfile = popUpProfile.querySelector(".pop-up__close-button");
+const closePopUpNewCard = popUpNewCard.querySelector(".pop-up__close-button");
+const closePopUpCard = popUpCard.querySelector(".pop-up__close-button");
+const closePopUpAvatar = popUpAvatar.querySelector(".pop-up__close-button");
+
+const popUpImage = popUpCard.querySelector(".pop-up__image");
+const popUpCaption = popUpCard.querySelector(".pop-up__caption");
+
+const cardsContainer = document.querySelector(".cards");
+const profileAddButton = profile.querySelector(".profile__add-button");
+const formNewCard = document.querySelector(".form_type_new-card");
+
+//Functions to open and close pop-ups and addind addEvtLists to close buttons
 function openPopUp(popup) {
   popup.classList.add("pop-up_opened");
 }
@@ -13,11 +38,7 @@ function openPopUp(popup) {
 function closePopUp(popup) {
   popup.classList.remove("pop-up_opened");
 }
-
-const closePopUpProfile = popUpProfile.querySelector(".pop-up__close-button");
-const closePopUpNewCard = popUpNewCard.querySelector(".pop-up__close-button");
-const closePopUpCard = popUpCard.querySelector(".pop-up__close-button");
-
+/*
 closePopUpProfile.addEventListener("click", function () {
   closePopUp(popUpProfile);
 });
@@ -30,13 +51,54 @@ closePopUpCard.addEventListener("click", function () {
   closePopUp(popUpCard);
 });
 
-const profile = document.querySelector(".profile");
-const profileEditButton = profile.querySelector(".profile__edit-button");
+closePopUpAvatar.addEventListener("click", function () {
+  closePopUp(popUpAvatar);
+});
+*/
+//ESC for modal pop-ups
+/*
+const forms = Array.from(document.querySelectorAll(".form"));
 
-const formProfileInfo = document.querySelector(".form_type_profile-info");
-const nameInput = formProfileInfo.querySelector(".form__item_name");
-const occupationInput = formProfileInfo.querySelector(".form__item_occupation");
+forms.forEach((form) => {
+  form.addEventListener("keydown", function (evt) {
+    const popUp = form.closest(".pop-up");
 
+    if (evt.key === "Escape") {
+      closePopUp(popUp);
+    }
+  });
+});
+*/
+
+//ESC for all pop-ups
+
+const popUpsList = Array.from(document.querySelectorAll(".pop-up"));
+
+function closePopUpsESC(evt) {
+  popUpsList.forEach((popup) => {
+    if (popup.classList.contains("pop-up_opened")) {
+      closePopUp(popup);
+    }
+  });
+}
+
+window.addEventListener("keydown", closePopUpsESC);
+
+//
+
+const popUpCloseButtonsList = Array.from(
+  document.querySelectorAll(".pop-up__close-button")
+);
+
+popUpCloseButtonsList.forEach((button) => {
+  button.addEventListener("click", function (evt) {
+    const popUp = button.closest(".pop-up");
+
+    closePopUp(popUp);
+  });
+});
+
+//Saving new profile info
 function formSaveHandler(event) {
   event.preventDefault();
 
@@ -58,9 +120,28 @@ profileEditButton.addEventListener("click", function () {
   openPopUp(popUpProfile);
 });
 
-const popUpImage = popUpCard.querySelector(".pop-up__image");
-const popUpCaption = popUpCard.querySelector(".pop-up__caption");
+//Saving avatar
+function formSaveAvatar(event) {
+  event.preventDefault();
 
+  const avatarInputValue = avatarInput.value;
+
+  const profileAvatar = profile.querySelector(".profile__avatar");
+
+  profileAvatar.src = avatarInputValue;
+
+  formAvatar.reset();
+
+  closePopUp(popUpAvatar);
+}
+
+formAvatar.addEventListener("submit", formSaveAvatar);
+
+profileEditAvatarButton.addEventListener("click", function () {
+  openPopUp(popUpAvatar);
+});
+
+//Creating card with template
 function createCard(imageLink, titleValue) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -89,21 +170,18 @@ function createCard(imageLink, titleValue) {
       popUpCaption.textContent = titleValue;
       openPopUp(popUpCard);
     });
-  //
+
   return cardElement;
 }
 
-const cardsContainer = document.querySelector(".cards");
-
+//Adding card to container
 function renderCard(obj, container) {
   const newCard = createCard(obj.link, obj.name);
 
   container.prepend(newCard);
 }
 
-const profileAddButton = profile.querySelector(".profile__add-button");
-const formNewCard = document.querySelector(".form_type_new-card");
-
+//Submit new card button
 function formAddHandler(event) {
   event.preventDefault();
 
@@ -125,6 +203,7 @@ profileAddButton.addEventListener("click", function () {
   openPopUp(popUpNewCard);
 });
 
+//Array of cards and adding them to the page
 const initialCards = [
   {
     name: "Осака",
