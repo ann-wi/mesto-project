@@ -58,7 +58,7 @@ popUpsList.forEach((popup) => {
 
 //all forms
 const formsList = document.forms;
-console.log(formsList);
+console.log(formsList.profileInfo);
 
 //Adding popup close buttons
 
