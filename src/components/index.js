@@ -18,11 +18,6 @@ const popUpAvatar = document.querySelector(".pop-up_type_avatar");
 const formAvatar = document.querySelector(".form_type_profile-avatar");
 const avatarInput = formAvatar.querySelector(".form__item_avatar");
 
-const closePopUpProfile = popUpProfile.querySelector(".pop-up__close-button");
-const closePopUpNewCard = popUpNewCard.querySelector(".pop-up__close-button");
-const closePopUpCard = popUpCard.querySelector(".pop-up__close-button");
-const closePopUpAvatar = popUpAvatar.querySelector(".pop-up__close-button");
-
 const popUpImage = popUpCard.querySelector(".pop-up__image");
 const popUpCaption = popUpCard.querySelector(".pop-up__caption");
 
@@ -38,40 +33,8 @@ function openPopUp(popup) {
 function closePopUp(popup) {
   popup.classList.remove("pop-up_opened");
 }
-/*
-closePopUpProfile.addEventListener("click", function () {
-  closePopUp(popUpProfile);
-});
-
-closePopUpNewCard.addEventListener("click", function () {
-  closePopUp(popUpNewCard);
-});
-
-closePopUpCard.addEventListener("click", function () {
-  closePopUp(popUpCard);
-});
-
-closePopUpAvatar.addEventListener("click", function () {
-  closePopUp(popUpAvatar);
-});
-*/
-//ESC for modal pop-ups
-/*
-const forms = Array.from(document.querySelectorAll(".form"));
-
-forms.forEach((form) => {
-  form.addEventListener("keydown", function (evt) {
-    const popUp = form.closest(".pop-up");
-
-    if (evt.key === "Escape") {
-      closePopUp(popUp);
-    }
-  });
-});
-*/
 
 //ESC for all pop-ups
-
 const popUpsList = Array.from(document.querySelectorAll(".pop-up"));
 
 function closePopUpsESC(evt) {
@@ -84,7 +47,20 @@ function closePopUpsESC(evt) {
 
 window.addEventListener("keydown", closePopUpsESC);
 
-//
+//Close pop-ups with overlay
+popUpsList.forEach((popup) => {
+  popup.addEventListener("click", function (evt) {
+    if (evt.target.classList.contains("pop-up")) {
+      closePopUp(evt.target);
+    }
+  });
+});
+
+//all forms
+const formsList = document.forms;
+console.log(formsList);
+
+//Adding popup close buttons
 
 const popUpCloseButtonsList = Array.from(
   document.querySelectorAll(".pop-up__close-button")
