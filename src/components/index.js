@@ -7,23 +7,105 @@ const profileEditAvatarButton = profile.querySelector(
 );
 
 const formProfileInfo = document.querySelector(".form_type_profile-info");
+const formNewCard = document.querySelector(".form_type_new-card");
+const formAvatar = document.querySelector(".form_type_profile-avatar");
+
 const nameInput = formProfileInfo.querySelector(".form__item_name");
 const occupationInput = formProfileInfo.querySelector(".form__item_occupation");
+const avatarInput = formAvatar.querySelector(".form__item_avatar");
 
 const popUpProfile = document.querySelector(".pop-up_type_profile");
 const popUpNewCard = document.querySelector(".pop-up_type_new-card");
 const popUpCard = document.querySelector(".pop-up_type_card");
 const popUpAvatar = document.querySelector(".pop-up_type_avatar");
 
-const formAvatar = document.querySelector(".form_type_profile-avatar");
-const avatarInput = formAvatar.querySelector(".form__item_avatar");
-
 const popUpImage = popUpCard.querySelector(".pop-up__image");
 const popUpCaption = popUpCard.querySelector(".pop-up__caption");
 
 const cardsContainer = document.querySelector(".cards");
 const profileAddButton = profile.querySelector(".profile__add-button");
-const formNewCard = document.querySelector(".form_type_new-card");
+
+//Forms validation
+
+//Show error message function
+function showInputError(formElem, inputElem, errorMessage) {
+  const inputError = formElem.querySelector(`.${inputElem.name}-error`);
+
+  inputElem.classList.add("form__item_type_error");
+
+  inputError.textContent = errorMessage;
+  inputError.classList.add("form__item-error_active");
+}
+
+//Hide error message function
+function hideInputError(formElem, inputElem) {
+  const inputError = formElem.querySelector(`.${inputElem.name}-error`);
+
+  inputElem.classList.remove("form__item_type_error");
+
+  inputError.classList.remove("form__item-error_active");
+  inputError.textContent = "";
+}
+
+//Validity
+function checkInputValidity(formElem, inputElem) {
+  if (!inputElem.validity.valid) {
+    showInputError(formElem, inputElem, inputElem.validationMessage);
+  } else {
+    hideInputError(formElem, inputElem);
+  }
+}
+
+//check inputs valid status
+function hasInvalidInput(inputElems) {
+  return inputElems.some((inputElem) => {
+    return !inputElem.validity.valid;
+  });
+}
+
+//toggle button
+function toggleButtonState(inputElems, buttonElem) {
+  if (hasInvalidInput(inputElems)) {
+    buttonElem.classList.add("form__save-button_inactive");
+  } else {
+    buttonElem.classList.remove("form__save-button_inactive");
+  }
+}
+
+//set Event Listeners for all forms
+function setEventListeners(formElem) {
+  const inputsList = Array.from(formElem.querySelectorAll(".form__item"));
+  const submitButton = formElem.querySelector(".form__save-button");
+
+  toggleButtonState(inputsList, submitButton);
+
+  inputsList.forEach((inputElem) => {
+    inputElem.addEventListener("input", function () {
+      checkInputValidity(formElem, inputElem);
+
+      toggleButtonState(inputsList, submitButton);
+    });
+  });
+}
+
+//enable validation
+function enableValidation() {
+  const formsList = Array.from(document.querySelectorAll(".form"));
+
+  formsList.forEach((formElem) => {
+    formElem.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+    });
+
+    const fieldsetsList = Array.from(
+      document.querySelectorAll(".form__input-container")
+    );
+
+    fieldsetsList.forEach((fieldsetElem) => {
+      setEventListeners(fieldsetElem);
+    });
+  });
+}
 
 //Functions to open and close pop-ups and addind addEvtLists to close buttons
 function openPopUp(popup) {
@@ -39,7 +121,7 @@ const popUpsList = Array.from(document.querySelectorAll(".pop-up"));
 
 function closePopUpsESC(evt) {
   popUpsList.forEach((popup) => {
-    if (popup.classList.contains("pop-up_opened")) {
+    if (evt.key === "Escape" && popup.classList.contains("pop-up_opened")) {
       closePopUp(popup);
     }
   });
@@ -55,10 +137,6 @@ popUpsList.forEach((popup) => {
     }
   });
 });
-
-//all forms
-const formsList = document.forms;
-console.log(formsList.profileInfo);
 
 //Adding popup close buttons
 
@@ -210,3 +288,5 @@ const initialCards = [
 initialCards.forEach((elem) => {
   return renderCard(elem, cardsContainer);
 });
+
+enableValidation();

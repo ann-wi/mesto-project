@@ -42,10 +42,15 @@
         </div>
       </div>
     </template>
+    <!--POP-UPS-->
     <div class="pop-up pop-up_type_profile">
       <div class="pop-up__container">
         <button class="pop-up__close-button" type="button"></button>
-        <form class="form form_type_profile-info" name="profile-info">
+        <form
+          class="form form_type_profile-info"
+          name="profile-info"
+          novalidate
+        >
           <h2 class="form__heading">Редактировать профиль</h2>
           <fieldset class="form__input-container">
             <input
@@ -54,41 +59,54 @@
               name="name"
               placeholder="Имя"
               value=""
+              minlength="2"
+              maxlength="40"
+              required
             />
+            <span class="form__item-error name-error"></span>
             <input
               class="form__item form__item_occupation"
               type="text"
               name="occupation"
               placeholder="Профессиональная деятельность"
               value=""
+              minlength="2"
+              maxlength="200"
+              required
             />
+            <span class="form__item-error occupation-error"></span>
+            <button class="form__save-button" type="submit">Сохранить</button>
           </fieldset>
-          <button class="form__save-button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
     <div class="pop-up pop-up_type_avatar">
       <div class="pop-up__container">
         <button class="pop-up__close-button" type="button"></button>
-        <form class="form form_type_profile-avatar" name="profile-avatar">
+        <form
+          class="form form_type_profile-avatar"
+          name="profile-avatar"
+          novalidate
+        >
           <h2 class="form__heading">Обновить аватар</h2>
           <fieldset class="form__input-container">
             <input
               class="form__item form__item_avatar"
-              type="text"
+              type="url"
               name="avatar"
               placeholder="Ссылка на аватар"
               value=""
             />
+            <span class="form__item-error avatar-error"></span>
+            <button class="form__save-button" type="submit">Сохранить</button>
           </fieldset>
-          <button class="form__save-button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
     <div class="pop-up pop-up_type_new-card">
       <div class="pop-up__container">
         <button class="pop-up__close-button" type="button"></button>
-        <form class="form form_type_new-card" name="new-card">
+        <form class="form form_type_new-card" name="new-card" novalidate>
           <h2 class="form__heading">Новое место</h2>
           <fieldset class="form__input-container">
             <input
@@ -97,16 +115,22 @@
               name="heading"
               placeholder="Название"
               value=""
+              minlength="2"
+              maxlength="30"
+              required
             />
+            <span class="form__item-error heading-error"></span>
             <input
               class="form__item form__item_image"
-              type="text"
+              type="url"
               name="image_link"
               placeholder="Ссылка на картинку"
               src=""
+              required
             />
+            <span class="form__item-error image_link-error"></span>
+            <button class="form__save-button" type="submit">Создать</button>
           </fieldset>
-          <button class="form__save-button" type="submit">Создать</button>
         </form>
       </div>
     </div>
