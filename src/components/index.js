@@ -165,6 +165,8 @@ function formSaveHandler(event) {
   profileName.textContent = nameInputValue;
   profileOccupation.textContent = occupationInputValue;
 
+  formProfileInfo.reset();
+
   closePopUp(popUpProfile);
 }
 
@@ -289,4 +291,5 @@ initialCards.forEach((elem) => {
   return renderCard(elem, cardsContainer);
 });
 
+//enable validation
 enableValidation();
