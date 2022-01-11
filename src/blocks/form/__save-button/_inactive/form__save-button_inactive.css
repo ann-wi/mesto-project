@@ -1,4 +1,5 @@
 .form__save-button_inactive {
+  pointer-events: none;
   background-color: inherit;
   color: rgba(0, 0, 0, 0.2);
 }
