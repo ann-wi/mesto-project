@@ -25,6 +25,9 @@ const avatarInput = formAvatar.querySelector(".form__item_avatar");
 const profileAvatar = profile.querySelector(".profile__avatar");
 const formAvatarSubmitButton = formAvatar.querySelector(".form__save-button");
 
+nameInput.value = profileName.textContent;
+occupationInput.value = profileOccupation.textContent;
+
 //ESC for all pop-ups
 function closePopUpsESC(evt) {
   if (evt.key === "Escape") {

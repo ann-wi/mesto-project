@@ -59,4 +59,11 @@ initialCards.forEach((elem) => {
   return renderCard(elem, cardsContainer);
 });
 
-enableValidation();
+enableValidation({
+  formSelector: ".form",
+  formInputSelector: ".form__item",
+  itemErrorSelector: "form__item_type_error",
+  activeErrorSelector: "form__item-error_active",
+  saveButtonSelector: ".form__save-button",
+  inactiveButtonSelector: "form__save-button_inactive",
+});
