@@ -7,6 +7,8 @@ const popUpCloseButtonsList = Array.from(
 
 const popUpProfile = document.querySelector(".pop-up_type_profile");
 const profile = document.querySelector(".profile");
+const profileName = profile.querySelector(".profile__name");
+const profileOccupation = profile.querySelector(".profile__occupation");
 const profileEditButton = profile.querySelector(".profile__edit-button");
 
 const formProfileInfo = document.querySelector(".form_type_profile-info");
@@ -20,45 +22,45 @@ const profileEditAvatarButton = profile.querySelector(
 
 const formAvatar = document.querySelector(".form_type_profile-avatar");
 const avatarInput = formAvatar.querySelector(".form__item_avatar");
+const profileAvatar = profile.querySelector(".profile__avatar");
+const formAvatarSubmitButton = formAvatar.querySelector(".form__save-button");
 
 //ESC for all pop-ups
 function closePopUpsESC(evt) {
-  popUpsList.forEach((popup) => {
-    if (evt.key === "Escape" && popup.classList.contains("pop-up_opened")) {
-      closePopUp(popup);
-    }
-  });
+  if (evt.key === "Escape") {
+    popUpsList.forEach((popup) => {
+      if (popup.classList.contains("pop-up_opened")) {
+        closePopUp(popup);
+      }
+    });
+  }
 }
 
 //Saving new profile info
-function formSaveHandler(event) {
+function handleProfileFormSubmit(event) {
   event.preventDefault();
 
   const nameInputValue = nameInput.value;
   const occupationInputValue = occupationInput.value;
 
-  const profileName = profile.querySelector(".profile__name");
-  const profileOccupation = profile.querySelector(".profile__occupation");
-
   profileName.textContent = nameInputValue;
   profileOccupation.textContent = occupationInputValue;
-
-  formProfileInfo.reset();
 
   closePopUp(popUpProfile);
 }
 
 //Saving avatar
-function formSaveAvatar(event) {
+function handleAvatarFormSubmit(event) {
   event.preventDefault();
 
   const avatarInputValue = avatarInput.value;
 
-  const profileAvatar = profile.querySelector(".profile__avatar");
-
   profileAvatar.src = avatarInputValue;
 
   formAvatar.reset();
+
+  formAvatarSubmitButton.classList.add("form__save-button_inactive");
+  formAvatarSubmitButton.setAttribute("disabled", "");
 
   closePopUp(popUpAvatar);
 }
@@ -68,12 +70,12 @@ export {
   popUpCloseButtonsList,
   closePopUpsESC,
   formProfileInfo,
-  formSaveHandler,
+  handleProfileFormSubmit,
   profileEditButton,
   profile,
   popUpProfile,
   popUpAvatar,
   formAvatar,
-  formSaveAvatar,
+  handleAvatarFormSubmit,
   profileEditAvatarButton,
 };

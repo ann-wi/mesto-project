@@ -4,14 +4,13 @@ import { openPopUp, closePopUp } from "./utils";
 import {
   popUpsList,
   popUpCloseButtonsList,
-  closePopUpsESC,
   formProfileInfo,
-  formSaveHandler,
+  handleProfileFormSubmit,
   profileEditButton,
   popUpProfile,
   popUpAvatar,
   formAvatar,
-  formSaveAvatar,
+  handleAvatarFormSubmit,
   profileEditAvatarButton,
 } from "./modal";
 import {
@@ -19,12 +18,10 @@ import {
   cardsContainer,
   profileAddButton,
   initialCards,
-  formAddHandler,
+  handleCardFormSubmit,
   renderCard,
   formNewCard,
 } from "./card";
-
-window.addEventListener("keydown", closePopUpsESC);
 
 //close pop-up with overlay
 popUpsList.forEach((popup) => {
@@ -43,17 +40,17 @@ popUpCloseButtonsList.forEach((button) => {
   });
 });
 
-formProfileInfo.addEventListener("submit", formSaveHandler);
+formProfileInfo.addEventListener("submit", handleProfileFormSubmit);
 profileEditButton.addEventListener("click", function () {
   openPopUp(popUpProfile);
 });
 
-formAvatar.addEventListener("submit", formSaveAvatar);
+formAvatar.addEventListener("submit", handleAvatarFormSubmit);
 profileEditAvatarButton.addEventListener("click", function () {
   openPopUp(popUpAvatar);
 });
 
-formNewCard.addEventListener("submit", formAddHandler);
+formNewCard.addEventListener("submit", handleCardFormSubmit);
 profileAddButton.addEventListener("click", function () {
   openPopUp(popUpNewCard);
 });

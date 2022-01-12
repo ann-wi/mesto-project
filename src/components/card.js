@@ -2,6 +2,12 @@ import { openPopUp, closePopUp } from "./utils";
 import { profile } from "./modal";
 
 const formNewCard = document.querySelector(".form_type_new-card");
+const formNewCardHeadingInput = formNewCard.querySelector(
+  ".form__item_heading"
+);
+const formNewCardImageInput = formNewCard.querySelector(".form__item_image");
+const formNewCardSubmitButton = formNewCard.querySelector(".form__save-button");
+
 const popUpNewCard = document.querySelector(".pop-up_type_new-card");
 const cardsContainer = document.querySelector(".cards");
 const profileAddButton = profile.querySelector(".profile__add-button");
@@ -15,8 +21,10 @@ function createCard(imageLink, titleValue) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
-  cardElement.querySelector(".card__image").setAttribute("src", imageLink);
-  cardElement.querySelector(".card__image").setAttribute("alt", titleValue);
+  const cardImage = cardElement.querySelector(".card__image");
+
+  cardImage.setAttribute("src", imageLink);
+  cardImage.setAttribute("alt", titleValue);
   cardElement.querySelector(".card__title").textContent = titleValue;
 
   cardElement
@@ -31,14 +39,12 @@ function createCard(imageLink, titleValue) {
       cardElement.remove();
     });
 
-  cardElement
-    .querySelector(".card__image")
-    .addEventListener("click", function () {
-      popUpImage.src = imageLink;
-      popUpImage.alt = titleValue;
-      popUpCaption.textContent = titleValue;
-      openPopUp(popUpCard);
-    });
+  cardImage.addEventListener("click", function () {
+    popUpImage.src = imageLink;
+    popUpImage.alt = titleValue;
+    popUpCaption.textContent = titleValue;
+    openPopUp(popUpCard);
+  });
 
   return cardElement;
 }
@@ -51,17 +57,20 @@ function renderCard(obj, container) {
 }
 
 //Submit new card button
-function formAddHandler(event) {
+function handleCardFormSubmit(event) {
   event.preventDefault();
 
   const inputs = {
-    name: formNewCard.querySelector(".form__item_heading").value,
-    link: formNewCard.querySelector(".form__item_image").value,
+    name: formNewCardHeadingInput.value,
+    link: formNewCardImageInput.value,
   };
 
   renderCard(inputs, cardsContainer);
 
   formNewCard.reset();
+
+  formNewCardSubmitButton.classList.add("form__save-button_inactive");
+  formNewCardSubmitButton.setAttribute("disabled", "");
 
   closePopUp(popUpNewCard);
 }
@@ -98,7 +107,7 @@ export {
   cardsContainer,
   profileAddButton,
   initialCards,
-  formAddHandler,
+  handleCardFormSubmit,
   renderCard,
   formNewCard,
 };
