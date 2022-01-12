@@ -39,8 +39,10 @@ function hasInvalidInput(inputElems) {
 //toggle button
 function toggleButtonState(inputElems, buttonElem) {
   if (hasInvalidInput(inputElems)) {
+    buttonElem.setAttribute("disabled", "");
     buttonElem.classList.add("form__save-button_inactive");
   } else {
+    buttonElem.removeAttribute("disabled");
     buttonElem.classList.remove("form__save-button_inactive");
   }
 }
@@ -66,16 +68,10 @@ function enableValidation() {
   const formsList = Array.from(document.querySelectorAll(".form"));
 
   formsList.forEach((formElem) => {
+    setEventListeners(formElem);
+
     formElem.addEventListener("submit", function (evt) {
       evt.preventDefault();
-    });
-
-    const fieldsetsList = Array.from(
-      document.querySelectorAll(".form__input-container")
-    );
-
-    fieldsetsList.forEach((fieldsetElem) => {
-      setEventListeners(fieldsetElem);
     });
   });
 }
