@@ -2,7 +2,6 @@ import "../pages/index.css";
 import { enableValidation } from "./validation";
 import { openPopUp, closePopUp } from "./utils";
 import {
-  loadForm,
   popUpsList,
   popUpCloseButtonsList,
   formProfileInfo,

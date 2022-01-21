@@ -1,6 +1,6 @@
 import { openPopUp, closePopUp } from "./utils";
 import { profile, profileName } from "./modal";
-import { putCardLike, deleteCardLike } from "./api";
+import { putCardLike, deleteCardLike, deleteCard } from "./api";
 
 const formNewCard = document.querySelector(".form_type_new-card");
 const formNewCardHeadingInput = formNewCard.querySelector(
@@ -36,16 +36,13 @@ function createCard(imageLink, titleValue, obj) {
 
   if (cardLikes.find((like) => like.name === profileName.textContent)) {
     likeButton.classList.add("card__like-button_active");
-    console.log("something has like");
   }
 
   likeButton.addEventListener("click", function () {
     if (likeButton.classList.contains("card__like-button_active")) {
       deleteCardLike(obj, likeButton, likeNumber);
-      likeNumber.textContent = obj["likes"].length;
     } else {
       putCardLike(obj, likeButton, likeNumber);
-      likeNumber.textContent = obj["likes"].length;
     }
   });
 
@@ -62,26 +59,15 @@ function createCard(imageLink, titleValue, obj) {
     cardTrashButton.classList.add("card__trash-button");
     cardTrashButton.setAttribute("type", "button");
 
+    cardTrashButton.addEventListener("click", function () {
+      deleteCard(obj, cardElement);
+    });
+
     cardElement.appendChild(cardTrashButton);
   }
 
   return cardElement;
 }
-
-//func for likes
-//setLikesInfo(likesData) {//
-//  if(like)
-//}
-
-//api part
-//.then((data) => //
-//  setLikesInfo(//obj)
-//)
-
-//obj = {
-//  liked: data.likes.map(like => like._id).includes(profile_id),
-//  likes: data.likes,
-//}
 
 //Adding card to container
 function renderCard(obj, container) {
@@ -109,41 +95,14 @@ function handleCardFormSubmit(event) {
   closePopUp(popUpNewCard);
 }
 
-const initialCards = [
-  {
-    name: "Осака",
-    link: "https://images.unsplash.com/photo-1589451814294-26d36298ac22?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    name: "Замок Нойшванштайн",
-    link: "https://images.unsplash.com/photo-1622281834944-bd3801342652?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80",
-  },
-  {
-    name: "Алма-Ата",
-    link: "https://images.unsplash.com/photo-1548450847-8a9a5cc3968f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1173&q=80",
-  },
-  {
-    name: "Пекин",
-    link: "https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    name: "Водопад Скоугафосс",
-    link: "https://images.unsplash.com/photo-1634055633771-48a7a9d2464a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    name: "Хоккайдо",
-    link: "https://images.unsplash.com/photo-1589218482020-ad16425f18eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80",
-  },
-];
-
 export {
   popUpNewCard,
   cardsContainer,
   profileAddButton,
-  initialCards,
   handleCardFormSubmit,
   renderCard,
   formNewCard,
   formNewCardImageInput,
   formNewCardHeadingInput,
+  formNewCardSubmitButton,
 };

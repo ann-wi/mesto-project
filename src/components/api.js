@@ -5,6 +5,7 @@ import {
   formNewCardHeadingInput,
   formNewCard,
   popUpNewCard,
+  formNewCardSubmitButton,
 } from "./card";
 import {
   loadForm,
@@ -23,29 +24,34 @@ import {
 } from "./modal";
 import { closePopUp } from "./utils";
 
+const config = {
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-6",
+  headers: {
+    authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
+    "Content-Type": "application/json; charset=UTF-8",
+  },
+};
+
 function loadInitialCards() {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-6/cards", {
+  return fetch(`${config.baseUrl}/cards`, {
     method: "GET",
-    headers: {
-      authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-      "Content-Type": "application/json; charset=UTF-8",
-    },
+    headers: config.headers,
   })
     .then((res) => res.json())
     .then((data) => {
       data.forEach((data) => {
         return renderCard(data, cardsContainer);
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 function loadProfileInfo() {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-6/users/me", {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: "GET",
-    headers: {
-      authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-      "Content-Type": "application/json; charset=UTF-8",
-    },
+    headers: config.headers,
   })
     .then((res) => res.json())
     .then((data) => {
@@ -58,21 +64,21 @@ function loadProfileInfo() {
 
       formProfileSubmitButton.classList.remove("form__save-button_inactive");
       formProfileSubmitButton.removeAttribute("disabled");
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 function changeProfileInfo(event) {
   event.preventDefault();
-  return fetch("https://nomoreparties.co/v1/plus-cohort-6/users/me", {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     body: JSON.stringify({
       name: nameInput.value,
       about: occupationInput.value,
     }),
-    headers: {
-      authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-      "Content-Type": "application/json; charset=UTF-8",
-    },
+    headers: config.headers,
   })
     .then((res) => res.json())
     .then((data) => {
@@ -86,20 +92,20 @@ function changeProfileInfo(event) {
     .then(() => {
       formProfileSubmitButton.textContent = "Сохранить";
     })
-    .then(closePopUp(popUpProfile));
+    .then(closePopUp(popUpProfile))
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function changeProfileAvatar(event) {
   event.preventDefault();
-  return fetch("https://nomoreparties.co/v1/plus-cohort-6/users/me/avatar", {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     body: JSON.stringify({
       avatar: avatarInput.value,
     }),
-    headers: {
-      authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-      "Content-Type": "application/json; charset=UTF-8",
-    },
+    headers: config.headers,
   })
     .then((res) => res.json())
     .then((data) => {
@@ -109,50 +115,53 @@ function changeProfileAvatar(event) {
 
       formAvatarSubmitButton.classList.add("form__save-button_inactive");
       formAvatarSubmitButton.setAttribute("disabled", "");
-
-      closePopUp(popUpAvatar);
+    })
+    .then(loadForm(formAvatar))
+    .then(() => {
+      formAvatarSubmitButton.textContent = "Сохранить";
+    })
+    .then(closePopUp(popUpAvatar))
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 function postNewCard(event) {
   event.preventDefault();
-  return fetch("https://nomoreparties.co/v1/plus-cohort-6/cards", {
+  return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
     body: JSON.stringify({
       name: formNewCardHeadingInput.value,
       link: formNewCardImageInput.value,
     }),
-    headers: {
-      authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-      "Content-Type": "application/json; charset=UTF-8",
-    },
+    headers: config.headers,
   })
     .then((res) => res.json())
     .then((data) => {
       renderCard(data, cardsContainer);
 
       formNewCard.reset();
-      closePopUp(popUpNewCard);
+    })
+    .then(loadForm(formNewCard))
+    .then(() => {
+      formNewCardSubmitButton.textContent = "Сохранить";
+    })
+    .then(closePopUp(popUpNewCard))
+    .catch((err) => {
+      console.log(err);
     });
 }
 
 function putCardLike(obj, button, likeNum) {
-  return fetch(
-    `https://nomoreparties.co/v1/plus-cohort-6/cards/likes/${obj._id}`,
-    {
-      method: "PUT",
-      body: JSON.stringify(obj.owner),
-      headers: {
-        authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-    }
-  )
+  return fetch(`${config.baseUrl}/cards/likes/${obj._id}`, {
+    method: "PUT",
+    body: JSON.stringify(obj.owner),
+    headers: config.headers,
+  })
     .then((res) => res.json())
     .then((data) => {
       const numberLikes = data.likes.length;
       likeNum.textContent = numberLikes;
-      console.log(numberLikes);
 
       button.classList.add("card__like-button_active");
     })
@@ -162,21 +171,14 @@ function putCardLike(obj, button, likeNum) {
 }
 
 function deleteCardLike(obj, button, likeNum) {
-  return fetch(
-    `https://nomoreparties.co/v1/plus-cohort-6/cards/likes/${obj._id}`,
-    {
-      method: "DELETE",
-      headers: {
-        authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-    }
-  )
+  return fetch(`${config.baseUrl}/cards/likes/${obj._id}`, {
+    method: "DELETE",
+    headers: config.headers,
+  })
     .then((res) => res.json())
     .then((data) => {
       const numberLikes = data.likes.length;
       likeNum.textContent = numberLikes;
-      console.log(numberLikes);
 
       button.classList.remove("card__like-button_active");
     })
@@ -185,20 +187,19 @@ function deleteCardLike(obj, button, likeNum) {
     });
 }
 
-fetch("https://nomoreparties.co/v1/plus-cohort-6/cards", {
-  method: "GET",
-  headers: {
-    authorization: "66513836-3591-419e-b6c4-3871ea4b7d14",
-    "Content-Type": "application/json; charset=UTF-8",
-  },
-})
-  .then((res) => res.json())
-  .catch((err) => {
-    console.log(err);
+function deleteCard(obj, cardElem) {
+  return fetch(`${config.baseUrl}/cards/${obj._id}`, {
+    method: "DELETE",
+    headers: config.headers,
   })
-  .then((data) => {
-    console.log(data);
-  });
+    .then((res) => res.json())
+    .then(() => {
+      cardElem.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 export {
   loadInitialCards,
@@ -208,4 +209,5 @@ export {
   postNewCard,
   putCardLike,
   deleteCardLike,
+  deleteCard,
 };

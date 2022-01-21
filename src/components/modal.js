@@ -27,9 +27,6 @@ const avatarInput = formAvatar.querySelector(".form__item_avatar");
 const profileAvatar = profile.querySelector(".profile__avatar");
 const formAvatarSubmitButton = formAvatar.querySelector(".form__save-button");
 
-//nameInput.value = profileName.textContent;
-//occupationInput.value = profileOccupation.textContent;
-
 function loadForm(form) {
   const submitButton = form.querySelector(".form__save-button");
 
