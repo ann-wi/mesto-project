@@ -1,5 +1,6 @@
 import { openPopUp, closePopUp } from "./utils";
-import { profile } from "./modal";
+import { profile, profileName } from "./modal";
+import { putCardLike, deleteCardLike, deleteCard } from "./api";
 
 const formNewCard = document.querySelector(".form_type_new-card");
 const formNewCardHeadingInput = formNewCard.querySelector(
@@ -17,27 +18,33 @@ const popUpImage = popUpCard.querySelector(".pop-up__image");
 const popUpCaption = popUpCard.querySelector(".pop-up__caption");
 
 //Creating card with template
-function createCard(imageLink, titleValue) {
+function createCard(imageLink, titleValue, obj) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
   const cardImage = cardElement.querySelector(".card__image");
+  const likeButton = cardElement.querySelector(".card__like-button");
 
   cardImage.setAttribute("src", imageLink);
   cardImage.setAttribute("alt", titleValue);
   cardElement.querySelector(".card__title").textContent = titleValue;
 
-  cardElement
-    .querySelector(".card__like-button")
-    .addEventListener("click", function (event) {
-      event.target.classList.toggle("card__like-button_active");
-    });
+  const likeNumber = cardElement.querySelector(".card__like-number");
+  likeNumber.textContent = obj.likes.length;
 
-  cardElement
-    .querySelector(".card__trash-button")
-    .addEventListener("click", function () {
-      cardElement.remove();
-    });
+  const cardLikes = obj.likes;
+
+  if (cardLikes.find((like) => like.name === profileName.textContent)) {
+    likeButton.classList.add("card__like-button_active");
+  }
+
+  likeButton.addEventListener("click", function () {
+    if (likeButton.classList.contains("card__like-button_active")) {
+      deleteCardLike(obj, likeButton, likeNumber);
+    } else {
+      putCardLike(obj, likeButton, likeNumber);
+    }
+  });
 
   cardImage.addEventListener("click", function () {
     popUpImage.src = imageLink;
@@ -46,12 +53,25 @@ function createCard(imageLink, titleValue) {
     openPopUp(popUpCard);
   });
 
+  if (obj["owner"]["name"] === profileName.textContent) {
+    const cardTrashButton = document.createElement("button");
+
+    cardTrashButton.classList.add("card__trash-button");
+    cardTrashButton.setAttribute("type", "button");
+
+    cardTrashButton.addEventListener("click", function () {
+      deleteCard(obj, cardElement);
+    });
+
+    cardElement.appendChild(cardTrashButton);
+  }
+
   return cardElement;
 }
 
 //Adding card to container
 function renderCard(obj, container) {
-  const newCard = createCard(obj.link, obj.name);
+  const newCard = createCard(obj.link, obj.name, obj);
 
   container.prepend(newCard);
 }
@@ -75,39 +95,14 @@ function handleCardFormSubmit(event) {
   closePopUp(popUpNewCard);
 }
 
-const initialCards = [
-  {
-    name: "Осака",
-    link: "https://images.unsplash.com/photo-1589451814294-26d36298ac22?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    name: "Замок Нойшванштайн",
-    link: "https://images.unsplash.com/photo-1622281834944-bd3801342652?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80",
-  },
-  {
-    name: "Алма-Ата",
-    link: "https://images.unsplash.com/photo-1548450847-8a9a5cc3968f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1173&q=80",
-  },
-  {
-    name: "Пекин",
-    link: "https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    name: "Водопад Скоугафосс",
-    link: "https://images.unsplash.com/photo-1634055633771-48a7a9d2464a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    name: "Хоккайдо",
-    link: "https://images.unsplash.com/photo-1589218482020-ad16425f18eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80",
-  },
-];
-
 export {
   popUpNewCard,
   cardsContainer,
   profileAddButton,
-  initialCards,
   handleCardFormSubmit,
   renderCard,
   formNewCard,
+  formNewCardImageInput,
+  formNewCardHeadingInput,
+  formNewCardSubmitButton,
 };
