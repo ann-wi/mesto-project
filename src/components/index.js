@@ -2,26 +2,24 @@ import "../pages/index.css";
 import { enableValidation } from "./validation";
 import { openPopUp, closePopUp } from "./utils";
 import {
+  loadForm,
   popUpsList,
   popUpCloseButtonsList,
   formProfileInfo,
-  handleProfileFormSubmit,
   profileEditButton,
   popUpProfile,
   popUpAvatar,
   formAvatar,
-  handleAvatarFormSubmit,
   profileEditAvatarButton,
 } from "./modal";
+import { popUpNewCard, profileAddButton, formNewCard } from "./card";
 import {
-  popUpNewCard,
-  cardsContainer,
-  profileAddButton,
-  initialCards,
-  handleCardFormSubmit,
-  renderCard,
-  formNewCard,
-} from "./card";
+  loadInitialCards,
+  loadProfileInfo,
+  changeProfileInfo,
+  changeProfileAvatar,
+  postNewCard,
+} from "./api";
 
 //close pop-up with overlay
 popUpsList.forEach((popup) => {
@@ -32,6 +30,7 @@ popUpsList.forEach((popup) => {
   });
 });
 
+//popUp close buttons
 popUpCloseButtonsList.forEach((button) => {
   button.addEventListener("click", function (evt) {
     const popUp = button.closest(".pop-up");
@@ -40,24 +39,23 @@ popUpCloseButtonsList.forEach((button) => {
   });
 });
 
-formProfileInfo.addEventListener("submit", handleProfileFormSubmit);
+formProfileInfo.addEventListener("submit", changeProfileInfo);
 profileEditButton.addEventListener("click", function () {
   openPopUp(popUpProfile);
 });
 
-formAvatar.addEventListener("submit", handleAvatarFormSubmit);
+formAvatar.addEventListener("submit", changeProfileAvatar);
 profileEditAvatarButton.addEventListener("click", function () {
   openPopUp(popUpAvatar);
 });
 
-formNewCard.addEventListener("submit", handleCardFormSubmit);
+formNewCard.addEventListener("submit", postNewCard);
 profileAddButton.addEventListener("click", function () {
   openPopUp(popUpNewCard);
 });
 
-initialCards.forEach((elem) => {
-  return renderCard(elem, cardsContainer);
-});
+loadInitialCards();
+loadProfileInfo();
 
 enableValidation({
   formSelector: ".form",

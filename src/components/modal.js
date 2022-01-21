@@ -14,6 +14,8 @@ const profileEditButton = profile.querySelector(".profile__edit-button");
 const formProfileInfo = document.querySelector(".form_type_profile-info");
 const nameInput = formProfileInfo.querySelector(".form__item_name");
 const occupationInput = formProfileInfo.querySelector(".form__item_occupation");
+const formProfileSubmitButton =
+  formProfileInfo.querySelector(".form__save-button");
 
 const popUpAvatar = document.querySelector(".pop-up_type_avatar");
 const profileEditAvatarButton = profile.querySelector(
@@ -25,8 +27,14 @@ const avatarInput = formAvatar.querySelector(".form__item_avatar");
 const profileAvatar = profile.querySelector(".profile__avatar");
 const formAvatarSubmitButton = formAvatar.querySelector(".form__save-button");
 
-nameInput.value = profileName.textContent;
-occupationInput.value = profileOccupation.textContent;
+//nameInput.value = profileName.textContent;
+//occupationInput.value = profileOccupation.textContent;
+
+function loadForm(form) {
+  const submitButton = form.querySelector(".form__save-button");
+
+  submitButton.textContent = "Сохранение...";
+}
 
 //ESC for all pop-ups
 function closePopUpsESC(evt) {
@@ -69,7 +77,15 @@ function handleAvatarFormSubmit(event) {
 }
 
 export {
+  loadForm,
   popUpsList,
+  profileName,
+  profileOccupation,
+  nameInput,
+  occupationInput,
+  formProfileSubmitButton,
+  avatarInput,
+  profileAvatar,
   popUpCloseButtonsList,
   closePopUpsESC,
   formProfileInfo,
@@ -81,4 +97,5 @@ export {
   formAvatar,
   handleAvatarFormSubmit,
   profileEditAvatarButton,
+  formAvatarSubmitButton,
 };
