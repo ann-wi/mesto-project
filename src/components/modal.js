@@ -48,6 +48,8 @@ function closePopUpsESC(evt) {
 function handleProfileFormSubmit(event) {
   event.preventDefault();
 
+  loadForm(formProfileInfo);
+
   changeProfileInfo(nameInput, occupationInput)
     .then((data) => {
       profileName.textContent = data.name;
@@ -56,7 +58,6 @@ function handleProfileFormSubmit(event) {
       formProfileSubmitButton.classList.remove("form__save-button_inactive");
       formProfileSubmitButton.removeAttribute("disabled");
     })
-    .then(() => loadForm(formProfileInfo))
     .then(() => closePopUp(popUpProfile))
     .catch((err) => {
       console.log(err);
@@ -69,6 +70,8 @@ function handleProfileFormSubmit(event) {
 function handleAvatarFormSubmit(event) {
   event.preventDefault();
 
+  loadForm(formAvatar);
+
   changeProfileAvatar(avatarInput)
     .then((data) => {
       profileAvatar.src = data.avatar;
@@ -78,7 +81,6 @@ function handleAvatarFormSubmit(event) {
       formAvatarSubmitButton.classList.add("form__save-button_inactive");
       formAvatarSubmitButton.setAttribute("disabled", "");
     })
-    .then(() => loadForm(formAvatar))
     .then(() => closePopUp(popUpAvatar))
     .catch((err) => {
       console.log(err);

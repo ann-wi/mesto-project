@@ -122,13 +122,14 @@ function renderCard(obj, container) {
 function handleNewCardSubmit(event) {
   event.preventDefault();
 
+  loadForm(formNewCard);
+
   postNewCard(formNewCardHeadingInput, formNewCardImageInput)
     .then((data) => {
       renderCard(data, cardsContainer);
 
       formNewCard.reset();
     })
-    .then(() => loadForm(formNewCard))
     .then(() => closePopUp(popUpNewCard))
     .catch((err) => {
       console.log(err);

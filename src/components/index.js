@@ -27,7 +27,7 @@ import {
   formNewCard,
   handleNewCardSubmit,
 } from "./card";
-import { getProfileAndCards } from "./api";
+import { fetchUser, fetchCards } from "./api";
 
 let userID;
 
@@ -65,23 +65,27 @@ profileAddButton.addEventListener("click", function () {
 });
 
 //get user and cards
-getProfileAndCards.then(([user, cards]) => {
-  userID = user._id;
+Promise.all([fetchUser, fetchCards])
+  .then(([user, cards]) => {
+    userID = user._id;
 
-  cards.forEach((card) => {
-    return renderCard(card, cardsContainer);
+    cards.forEach((card) => {
+      return renderCard(card, cardsContainer);
+    });
+
+    profileName.textContent = user.name;
+    profileOccupation.textContent = user.about;
+    profileAvatar.src = user.avatar;
+
+    nameInput.value = user.name;
+    occupationInput.value = user.about;
+
+    formProfileSubmitButton.classList.remove("form__save-button_inactive");
+    formProfileSubmitButton.removeAttribute("disabled");
+  })
+  .catch((err) => {
+    console.log(err);
   });
-
-  profileName.textContent = user.name;
-  profileOccupation.textContent = user.about;
-  profileAvatar.src = user.avatar;
-
-  nameInput.value = user.name;
-  occupationInput.value = user.about;
-
-  formProfileSubmitButton.classList.remove("form__save-button_inactive");
-  formProfileSubmitButton.removeAttribute("disabled");
-});
 
 enableValidation({
   formSelector: ".form",

@@ -22,8 +22,6 @@ const fetchUser = fetch(`${config.baseUrl}/users/me`, {
   headers: config.headers,
 }).then(checkResponse);
 
-const getProfileAndCards = Promise.all([fetchUser, fetchCards]);
-
 const changeProfileInfo = (nameInput, occupationInput) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
@@ -79,11 +77,12 @@ const deleteCard = (obj, cardElem) => {
 };
 
 export {
-  getProfileAndCards,
   changeProfileInfo,
   changeProfileAvatar,
   postNewCard,
   putCardLike,
   deleteCardLike,
   deleteCard,
+  fetchUser,
+  fetchCards,
 };
