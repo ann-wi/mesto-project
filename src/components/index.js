@@ -5,20 +5,31 @@ import {
   popUpsList,
   popUpCloseButtonsList,
   formProfileInfo,
+  profileName,
+  profileOccupation,
+  profileAvatar,
   profileEditButton,
+  nameInput,
+  occupationInput,
+  formProfileSubmitButton,
   popUpProfile,
   popUpAvatar,
   formAvatar,
   profileEditAvatarButton,
+  handleProfileFormSubmit,
+  handleAvatarFormSubmit,
 } from "./modal";
-import { popUpNewCard, profileAddButton, formNewCard } from "./card";
 import {
-  loadInitialCards,
-  loadProfileInfo,
-  changeProfileInfo,
-  changeProfileAvatar,
-  postNewCard,
-} from "./api";
+  cardsContainer,
+  renderCard,
+  popUpNewCard,
+  profileAddButton,
+  formNewCard,
+  handleNewCardSubmit,
+} from "./card";
+import { getProfileAndCards } from "./api";
+
+let userID;
 
 //close pop-up with overlay
 popUpsList.forEach((popup) => {
@@ -38,23 +49,39 @@ popUpCloseButtonsList.forEach((button) => {
   });
 });
 
-formProfileInfo.addEventListener("submit", changeProfileInfo);
+formProfileInfo.addEventListener("submit", handleProfileFormSubmit);
 profileEditButton.addEventListener("click", function () {
   openPopUp(popUpProfile);
 });
 
-formAvatar.addEventListener("submit", changeProfileAvatar);
+formAvatar.addEventListener("submit", handleAvatarFormSubmit);
 profileEditAvatarButton.addEventListener("click", function () {
   openPopUp(popUpAvatar);
 });
 
-formNewCard.addEventListener("submit", postNewCard);
+formNewCard.addEventListener("submit", handleNewCardSubmit);
 profileAddButton.addEventListener("click", function () {
   openPopUp(popUpNewCard);
 });
 
-loadInitialCards();
-loadProfileInfo();
+//get user and cards
+getProfileAndCards.then(([user, cards]) => {
+  userID = user._id;
+
+  cards.forEach((card) => {
+    return renderCard(card, cardsContainer);
+  });
+
+  profileName.textContent = user.name;
+  profileOccupation.textContent = user.about;
+  profileAvatar.src = user.avatar;
+
+  nameInput.value = user.name;
+  occupationInput.value = user.about;
+
+  formProfileSubmitButton.classList.remove("form__save-button_inactive");
+  formProfileSubmitButton.removeAttribute("disabled");
+});
 
 enableValidation({
   formSelector: ".form",
@@ -64,3 +91,5 @@ enableValidation({
   saveButtonSelector: ".form__save-button",
   inactiveButtonSelector: "form__save-button_inactive",
 });
+
+export { userID };

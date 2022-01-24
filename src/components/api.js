@@ -1,29 +1,3 @@
-import {
-  renderCard,
-  cardsContainer,
-  formNewCardImageInput,
-  formNewCardHeadingInput,
-  formNewCard,
-  popUpNewCard,
-  formNewCardSubmitButton,
-} from "./card";
-import {
-  loadForm,
-  popUpAvatar,
-  profileAvatar,
-  profileName,
-  profileOccupation,
-  nameInput,
-  occupationInput,
-  formProfileSubmitButton,
-  formAvatar,
-  formAvatarSubmitButton,
-  avatarInput,
-  popUpProfile,
-  formProfileInfo,
-} from "./modal";
-import { closePopUp } from "./utils";
-
 const config = {
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-6",
   headers: {
@@ -32,46 +6,25 @@ const config = {
   },
 };
 
-function loadInitialCards() {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: "GET",
-    headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((data) => {
-        return renderCard(data, cardsContainer);
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка ${res.status}`);
 }
 
-function loadProfileInfo() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: "GET",
-    headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      profileName.textContent = data.name;
-      profileOccupation.textContent = data.about;
-      profileAvatar.src = data.avatar;
+//Promise.all for cards and user
+const fetchCards = fetch(`${config.baseUrl}/cards`, {
+  headers: config.headers,
+}).then(checkResponse);
 
-      nameInput.value = data.name;
-      occupationInput.value = data.about;
+const fetchUser = fetch(`${config.baseUrl}/users/me`, {
+  headers: config.headers,
+}).then(checkResponse);
 
-      formProfileSubmitButton.classList.remove("form__save-button_inactive");
-      formProfileSubmitButton.removeAttribute("disabled");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+const getProfileAndCards = Promise.all([fetchUser, fetchCards]);
 
-function changeProfileInfo(event) {
-  event.preventDefault();
+const changeProfileInfo = (nameInput, occupationInput) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     body: JSON.stringify({
@@ -79,131 +32,54 @@ function changeProfileInfo(event) {
       about: occupationInput.value,
     }),
     headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      profileName.textContent = data.name;
-      profileOccupation.textContent = data.about;
+  }).then(checkResponse);
+};
 
-      formProfileSubmitButton.classList.remove("form__save-button_inactive");
-      formProfileSubmitButton.removeAttribute("disabled");
-    })
-    .then(loadForm(formProfileInfo))
-    .then(() => {
-      formProfileSubmitButton.textContent = "Сохранить";
-    })
-    .then(closePopUp(popUpProfile))
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function changeProfileAvatar(event) {
-  event.preventDefault();
+const changeProfileAvatar = (avatarInput) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     body: JSON.stringify({
       avatar: avatarInput.value,
     }),
     headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      profileAvatar.src = data.avatar;
+  }).then(checkResponse);
+};
 
-      formAvatar.reset();
-
-      formAvatarSubmitButton.classList.add("form__save-button_inactive");
-      formAvatarSubmitButton.setAttribute("disabled", "");
-    })
-    .then(loadForm(formAvatar))
-    .then(() => {
-      formAvatarSubmitButton.textContent = "Сохранить";
-    })
-    .then(closePopUp(popUpAvatar))
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function postNewCard(event) {
-  event.preventDefault();
+const postNewCard = (headingInput, imageInput) => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
     body: JSON.stringify({
-      name: formNewCardHeadingInput.value,
-      link: formNewCardImageInput.value,
+      name: headingInput.value,
+      link: imageInput.value,
     }),
     headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      renderCard(data, cardsContainer);
+  }).then(checkResponse);
+};
 
-      formNewCard.reset();
-    })
-    .then(loadForm(formNewCard))
-    .then(() => {
-      formNewCardSubmitButton.textContent = "Сохранить";
-    })
-    .then(closePopUp(popUpNewCard))
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function putCardLike(obj, button, likeNum) {
+const putCardLike = (obj, button, likeNum) => {
   return fetch(`${config.baseUrl}/cards/likes/${obj._id}`, {
     method: "PUT",
     body: JSON.stringify(obj.owner),
     headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      const numberLikes = data.likes.length;
-      likeNum.textContent = numberLikes;
+  }).then(checkResponse);
+};
 
-      button.classList.add("card__like-button_active");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function deleteCardLike(obj, button, likeNum) {
+const deleteCardLike = (obj, button, likeNum) => {
   return fetch(`${config.baseUrl}/cards/likes/${obj._id}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      const numberLikes = data.likes.length;
-      likeNum.textContent = numberLikes;
+  }).then(checkResponse);
+};
 
-      button.classList.remove("card__like-button_active");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function deleteCard(obj, cardElem) {
+const deleteCard = (obj, cardElem) => {
   return fetch(`${config.baseUrl}/cards/${obj._id}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => res.json())
-    .then(() => {
-      cardElem.remove();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+  }).then(checkResponse);
+};
 
 export {
-  loadInitialCards,
-  loadProfileInfo,
+  getProfileAndCards,
   changeProfileInfo,
   changeProfileAvatar,
   postNewCard,

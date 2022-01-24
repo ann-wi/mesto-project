@@ -1,4 +1,5 @@
 import { closePopUp } from "./utils";
+import { changeProfileInfo, changeProfileAvatar } from "./api";
 
 const popUpsList = Array.from(document.querySelectorAll(".pop-up"));
 const popUpCloseButtonsList = Array.from(
@@ -44,33 +45,47 @@ function closePopUpsESC(evt) {
   }
 }
 
-//Saving new profile info
 function handleProfileFormSubmit(event) {
   event.preventDefault();
 
-  const nameInputValue = nameInput.value;
-  const occupationInputValue = occupationInput.value;
+  changeProfileInfo(nameInput, occupationInput)
+    .then((data) => {
+      profileName.textContent = data.name;
+      profileOccupation.textContent = data.about;
 
-  profileName.textContent = nameInputValue;
-  profileOccupation.textContent = occupationInputValue;
-
-  closePopUp(popUpProfile);
+      formProfileSubmitButton.classList.remove("form__save-button_inactive");
+      formProfileSubmitButton.removeAttribute("disabled");
+    })
+    .then(() => loadForm(formProfileInfo))
+    .then(() => closePopUp(popUpProfile))
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      formProfileSubmitButton.textContent = "Сохранить";
+    });
 }
 
-//Saving avatar
 function handleAvatarFormSubmit(event) {
   event.preventDefault();
 
-  const avatarInputValue = avatarInput.value;
+  changeProfileAvatar(avatarInput)
+    .then((data) => {
+      profileAvatar.src = data.avatar;
 
-  profileAvatar.src = avatarInputValue;
+      formAvatar.reset();
 
-  formAvatar.reset();
-
-  formAvatarSubmitButton.classList.add("form__save-button_inactive");
-  formAvatarSubmitButton.setAttribute("disabled", "");
-
-  closePopUp(popUpAvatar);
+      formAvatarSubmitButton.classList.add("form__save-button_inactive");
+      formAvatarSubmitButton.setAttribute("disabled", "");
+    })
+    .then(() => loadForm(formAvatar))
+    .then(() => closePopUp(popUpAvatar))
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      formAvatarSubmitButton.textContent = "Сохранить";
+    });
 }
 
 export {
@@ -86,13 +101,13 @@ export {
   popUpCloseButtonsList,
   closePopUpsESC,
   formProfileInfo,
-  handleProfileFormSubmit,
   profileEditButton,
   profile,
   popUpProfile,
   popUpAvatar,
   formAvatar,
   handleAvatarFormSubmit,
+  handleProfileFormSubmit,
   profileEditAvatarButton,
   formAvatarSubmitButton,
 };
